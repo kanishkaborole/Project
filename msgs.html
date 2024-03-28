@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Chat
+{% endblock title %}
+
+{% block body %}
+
+<div class="container-fluid mt-3">
+    <div class="panel messages-panel">
+        <div class="contacts-list">
+            <div class="mt-2">
+                <div data-toggle="tab" class="active">
+                    <h3> Chats </h3>
+                </div>
+                <hr>
+            </div>
+            <div class="tab-content">
+                <div id="inbox" class="contacts-outter-wrapper tab-pane active">
+                    <div class="contacts-outter">
+                        <ul class="list-unstyled contacts">
+                            {% for contact in contacts %}
+                            <li data-toggle="tab" id="contact-{{ contact.username }}">
+                                <a href="{% url 'chat_with_username' username=contact.username %}" class="text-decoration-none contact-link">
+                                    <div class="img-container">
+                                        <img alt="" class="img-circle medium-image"
+                                            src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                                    </div>
+                                    <div class="message-info">
+                                        <div class="vcentered info-combo">
+                                            <h6 class="no-margin-bottom name">{{ contact.first_name }} {{ contact.last_name }}</h6>
+                                            <p>Message 2</p>
+                                        </div>
+                                        <span class="message-time">2:32 <sup>AM</sup></span>
+                                    </div>
+                                    <div class="count-and-trash">
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane message-body active" id="inbox-message-1">
+                <div class="message-top">
+                    <div style="display: inline-block;">
+                        <img alt="User" class="img-circle medium-image ms-2"
+                            src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                    </div>
+                    <div style="display: inline-block;">
+                        <h6 class="name"> {{ current_user.first_name }} {{ current_user.last_name }} </h6>
+                    </div>
+                </div>
+                <div class="message-chat">
+                    <div class="chat-body">
+                        {% if username %}
+                            <h1> HEllo </h1>
+                        {% endif %}
+                        {% comment %} <div class="row col-12 justify-content-middle">
+                            <div class="col-lg-12 col-sm-12 text-center">
+                                <img src="static/img/live-chat.png" alt="" height="150px">
+                                <p> <i>Unleashing Seamless Conversations - Your Questions, Instantly Answered for
+                                        Effortless Friend Connections. </i></p>
+                            </div>
+                        </div> {% endcomment %}
+
+                        {% for msg in msgs %}
+                            {% if msg.sender == current_user.username %}
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image"
+                                    src="https://bootdey.com/img/Content/avatar/avatar1.png">
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4> {{msg.sender}} </h4>
+                                            <h5> <i class="fa fa-clock-o"></i> {{msg.sendtime}} </h5>
+                                        </div>
+                                        <hr>
+                                        <div class="message-text">
+                                            {{ msg.message|linebreaksbr|safe }} {# Use linebreaksbr and safe filters #}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            {% else %}
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image"
+                                    src="https://bootdey.com/img/Content/avatar/avatar1.png">
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4> {{msg.sender}} </h4>
+                                        <h5> <i class="fa fa-clock-o"></i> {{msg.sendtime}} </h5>
+                                    </div>
+                                    <hr>
+                                    <div class="message-text">
+                                        {{ msg.message|linebreaksbr|safe }} {# Use linebreaksbr and safe filters #}
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="chat-footer">
+                        <textarea class="send-message-text"></textarea>
+                        <label class="upload-file">
+                            <input type="file" required="">
+                            <i class="fa fa-paperclip"></i>
+                        </label>
+                        <button type="button" class="send-message-button btn-info"> <i class="fa fa-send"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

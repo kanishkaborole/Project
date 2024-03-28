@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <title>Virtual Assitant | 
+    {% block title %}
+        Home
+    {% endblock title %}
+        </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="{% static 'img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/live-chat.png' %}">
+    <!-- Load Require CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font CSS -->
+    <link href="{% static 'css/boxicon.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Load Tempalte CSS -->
+    <link rel="stylesheet" href="{% static 'css/templatemo.css' %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    <link href="{% static 'css/message.css' %}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<!--
+    
+TemplateMo 561 Purple Buzz
+
+https://templatemo.com/tm-561-purple-buzz
+
+-->
+</head>
+
+<body>
+    <!-- Header -->
+    <nav id="main_nav" class="navbar navbar-expand-lg navbar-light bg-white shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand h1" href="/">
+                <i class='bx bx-bot bx-sm text-dark'></i>
+                <span class="text-dark h4">Virtual</span> <span class="text-primary h4">Assistant</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggler-success" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="navbar-toggler-success">
+                
+                {% if user.is_authenticated %}
+                <div class="flex-fill mx-xl-5 mb-2">
+                    <ul class="nav navbar-nav d-flex justify-content-center mx-xl-5 text-center text-dark">
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="{% url 'dashboard' %}">Dashboard</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <a class="nav-link" href="{% url 'log_out' %}" style="display: inline-flex; align-items: center;"><i class='bx bx-user-circle bx-sm text-primary me-2'></i> {{ fname }}</a>
+                </div>    
+                {% else %}
+                <div class="flex-fill mx-xl-5 mb-2">
+                    <ul class="nav navbar-nav d-flex justify-content-center mx-xl-5 text-center text-dark">
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="{% url 'log_in' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-outline-primary rounded-pill px-3" href="{% url 'register' %}">Register</a>
+                        </li>
+
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+    {% for message in messages %} 
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      {% if message.tags == 'success' %}
+      <script>
+        var m = "{{ message }}"
+        swal("Success !", m , 'success')
+      </script>
+      {% elif message.tags == 'danger' %}
+      <script>
+        var m = "{{ message }}"
+        swal("Error !", m , 'error')
+      </script>
+      {% elif message.tags == 'info' %}
+      <script>
+        var m = "{{ message }}"
+        swal( m )
+      </script>
+      {% endif %}
+
+  {% endfor %}
+  
+  {% block body %}
+  
+  {% endblock body %}
+        
+
+<div class="footer">
+        <div class="w-100 bg-primary py-3">
+            <div class="container">
+                <div class="row pt-2">
+                    <div class="col-lg-6 col-sm-12">
+                        <p class="text-lg-start text-center text-light light-300">
+                            © Copyright Virtual Assistant. All Rights Reserved.
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer -->
+
+
+    <!-- Bootstrap -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    
+    <!-- Load jQuery require for isotope -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Isotope -->
+    <script src="{% static 'js/isotope.pkgd.js' %}"></script>
+    <!-- Page Script -->
+    <script>
+        $(window).load(function() {
+            // init Isotope
+            var $projects = $('.projects').isotope({
+                itemSelector: '.project',
+                layoutMode: 'fitRows'
+            });
+            $(".filter-btn").click(function() {
+                var data_filter = $(this).attr("data-filter");
+                $projects.isotope({
+                    filter: data_filter
+                });
+                $(".filter-btn").removeClass("active");
+                $(".filter-btn").removeClass("shadow");
+                $(this).addClass("active");
+                $(this).addClass("shadow");
+                return false;
+            });
+        });
+    </script>
+    <!-- Templatemo -->
+    <script src="/{% static 'js/templatemo.js' %}"></script>
+    <!-- Custom -->
+    <script src="/{% static 'js/custom.js' %}"></script>
+
+    <!-- Add this script to your HTML -->
+    {% if username %}
+    <script>
+        // Use jQuery to wait for the document to be ready
+        $(document).ready(function () {
+            // Select the chat-body element by its ID
+            var chatBody = $('#chat-body');
+
+            // Scroll to the bottom of the chat-body with animation
+            chatBody.animate({ scrollTop: chatBody.prop("scrollHeight") }, 500);
+        });
+    </script>
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#voiceAssistantButton").on("click", function(e) {
+                e.preventDefault();
+    
+                // Make an AJAX request to your Django backend
+                $.ajax({
+                    url: "/record_and_transcribe/",
+                    type: "GET",
+                    success: function(response) {
+                        // Handle the response from the server
+                        console.log(response);
+    
+                        // Check if the response contains messages
+                        if (response.messages) {
+                            response.messages.forEach(function(message) {
+                                // Display messages using sweetAlert
+                                if (message.tags === 'success') {
+                                    swal("Success!", message.message, 'success');
+                                } else if (message.tags === 'error') {
+                                    swal("Error!", message.message, 'error');
+                                } else if (message.tags === 'info') {
+                                    swal("Error!", message.message, 'info');
+                                }
+                            });
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

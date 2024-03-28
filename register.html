@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock title %}
+
+
+{% block body %}
+<!-- Start Contact -->
+<section class="container py-5">
+    <h1 class="col-12 col-xl-8 h2 text-center text-primary pt-3">Register Here</h1>
+    <br>
+    <div class="row pb-4">
+        <!-- Start Contact Form -->
+        <div class="col-lg-4">
+            <form class="contact-form row" method="post" action="" >
+                {% csrf_token %}
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control form-control-lg light-300" id="fname"
+                            name="fname" placeholder="First Name">
+                        <label for="floatingname light-300">First Name</label>
+                    </div>
+                </div><!-- End Input Name -->
+
+                <div class="col-lg-6 mb-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control form-control-lg light-300" id="lname"
+                            name="lname" placeholder="Last Name">
+                        <label for="floatingname light-300">Last Name</label>
+                    </div>
+                </div><!-- End Input Name -->
+
+                <div class="col-12">
+                    <div class="form-floating mb-4">
+                        <input type="email" class="form-control form-control-lg light-300" id="username"
+                            name="username" placeholder="Email">
+                        <label for="floatingsubject light-300">Email</label>
+                    </div>
+                </div><!-- End Input Email -->
+
+                <div class="col-12">
+                    <div class="form-floating mb-4">
+                        <input type="password" class="form-control form-control-lg light-300" id="password"
+                            name="password" placeholder="Password">
+                        <label for="floatingemail light-300">Password</label>
+                    </div>
+                </div><!-- End Input Email -->
+
+                <div class="col-12">
+                    <div class="form-floating mb-4">
+                        <input type="password" class="form-control form-control-lg light-300" id="password1"
+                            name="password1" placeholder="Re-enter Password">
+                        <label for="floatingphone light-300">Re-enter Password</label>
+                    </div>
+                </div><!-- End Input Phone -->
+
+                <div class="col-md-12 col-12 m-auto text-end">
+                    <button type="submit"
+                        class="btn btn-secondary rounded-pill px-md-5 px-4 py-2 radius-0 text-light light-300">Submit</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-lg-4">
+            <img src="static/img/chat_icon.png" alt="Chat Icon" width="100%" height="auto">
+        </div>
+        <!-- End Contact Form -->
+
+
+    </div>
+</section>
+<!-- End Contact -->
+{% endblock body %}

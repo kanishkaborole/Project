@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock title %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+<section class="py-5 mb-5">
+    <div class="container">
+        <div class="recent-work-header row text-center pb-5">
+            <h2 class="col-md-6 m-auto h2 semi-bold-600 py-2">Welcome, {{fname}}..!!</h2>
+        </div>
+        <div class="row gy-5 g-lg-5 mb-4 justify-content-center">
+
+            <!-- Start Recent Work -->
+            <div class="col-md-4 mb-3">
+                <a href="chat" class="recent-work card border-0 shadow-lg overflow-hidden">
+                    <img class="rec1nt-work-img card-img" src="static/img/chat_with_friend.png" alt="Card image">
+                    <div class="recent-work-vertical card-img-overlay d-flex align-items-end">
+                        <div class="recent-work-content text-start mb-3 ml-3 text-dark">
+                            <h3 class="card-title light-300">Chat with Friend</h3>
+                            <p class="card-text">Exchanging meaningful insights and information with a friend through a Chat.</p>
+                        </div>
+                    </div>
+                </a>
+            </div><!-- End Recent Work -->
+
+            <!-- Start Recent Work -->
+            <div class="col-md-4 mb-3">
+                <button class="recent-work card border-0 shadow-lg overflow-hidden" id="voiceAssistantButton">
+                    <img class="recent-work-img card-img" src="static/img/voice_assistant.png" alt="Card image">
+                    <div class="recent-work-vertical card-img-overlay d-flex align-items-end">
+                        <div class="recent-work-content text-start mb-3 ml-3 text-dark">
+                            <h3 class="card-title light-300">Voice Assistant</h3>
+                            <p class="card-text">Exchanging meaningful insights and information with a friend through a Voice.</p>
+                        </div>
+                    </div>
+                </button>
+            </div>      
+        </div>
+    </div>
+</section>
+{% endif %}
+    
+{% endblock body %}
+    
+    

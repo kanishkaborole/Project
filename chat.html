@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Chat
+{% endblock title %}
+
+{% block body %}
+
+{% load static %}
+
+<div class="container-fluid mt-3">
+    <div class="panel messages-panel">
+        <div class="contacts-list">
+            <div class="mt-2">
+                <div data-toggle="tab" class="active">
+                    <h3> Chats </h3>
+                </div>
+                <hr>
+            </div>
+            <div class="tab-content">
+                <div id="inbox" class="contacts-outter-wrapper tab-pane active">
+                    <div class="contacts-outter">
+                        <ul class="list-unstyled contacts">
+                            {% for contact_data in contacts %}
+                                <li data-toggle="tab" id="contact-{{ contact_data.contact.username }}">
+                                    <a href="{% url 'chat_with_username' username=contact_data.contact.username %}" class="text-decoration-none contact-link">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="img-container">
+                                                    <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="message-info">
+                                                    <div class="vcentered info-combo">
+                                                        <h6 class="no-margin-bottom name">{{ contact_data.contact.first_name }} {{ contact_data.contact.last_name }}</h6>
+                                                        <p>{{ contact_data.last_message }}</p><br>
+                                                        {% if contact_data.sendtime %}
+                                                            <p class="sendtime text-muted small" style="position: absolute; bottom: 0;">{{ contact_data.sendtime|date:"M d, Y h:i A" }}</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if username %}
+            <div class="tab-content">
+                <div class="tab-pane message-body active" id="inbox-message-1">
+                    <div class="message-top">
+                        <div style="display: inline-block;">
+                            <img alt="User" class="img-circle medium-image ms-2"
+                                src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                        </div>
+                        <div style="display: inline-block;">
+                            <h6 class="name"> {{ other_user_first_name }} {{ other_user_last_name }}</h6>
+                        </div>
+                    </div>
+                    <div class="message-chat">
+                        <div class="chat-body" id="chat-body">
+                            {% for message in conversation %}
+                                <div class="message {% if message.sender == current_user %}my-message{% else %}info{% endif %}">
+                                    <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                                    <div class="message-body">
+                                        <div class="message-body-inner">
+                                            <div class="message-info">
+                                                {% comment %} <h4>{{ message.sender }}</h4> {% endcomment %}
+                                                <h5><i class="fa fa-clock-o"></i>{{ message.sendtime|date:"M d, Y h:i A" }}</h5>
+                                            </div>
+                                            <hr>
+                                            <div class="message-text">
+                                                {{ message.message|linebreaksbr|safe }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="chat-footer">
+                            <form action="{% url 'send_message' username=other_user.username %}" method="post">
+                                {% csrf_token %}
+                                <textarea name="message" class="send-message-text"></textarea>
+                                <button type="submit" class="send-message-button btn-info"> <i class="fa fa-send"></i> </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        <div class="tab-content">
+            <div class="tab-pane message-body active" id="inbox-message-1">
+                
+                <div class="message-chat">
+                    <div class="chat-body">
+                        <div class="row col-12 justify-content-middle">
+                            <div class="col-lg-12 col-sm-12 text-center">
+                                <img src="static/img/live-chat.png" alt="" height="150px">
+                                <p> <i>Unleashing Seamless Conversations - Your Questions, Instantly Answered for
+                                        Effortless Friend Connections. </i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock body %}
